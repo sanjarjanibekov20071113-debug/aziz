@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+:root {
+  --primary: #4f46e5;
+  --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 100%);
+  --glass: rgba(255, 255, 255, 0.7);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background: var(--bg-gradient); min-height: 100vh; color: #1f2937; }
+
+.glass-effect {
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+/* AUTH */
+.login-screen { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+.auth-glass-card { background: white; padding: 40px; border-radius: 32px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+.auth-logo-box { width: 60px; height: 60px; background: var(--primary); color: white; font-size: 2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; border-radius: 18px; margin: 0 auto 15px; }
+.auth-form { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
+.input-field { display: flex; align-items: center; background: #f3f4f6; padding: 14px; border-radius: 14px; }
+.input-field input { border: none; background: transparent; outline: none; width: 100%; margin-left: 10px; font-size: 1rem; }
+.btn-primary { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3); }
+
+.hint-chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+.hint-chips button { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 10px; color: var(--primary); font-weight: 700; cursor: pointer; font-size: 0.8rem; }
+
+/* LAYOUT */
+.app-portal { padding: 30px; display: flex; justify-content: center; }
+.portal-container { width: 100%; max-width: 1400px; display: flex; gap: 25px; }
+.app-sidebar { width: 260px; padding: 30px; display: flex; flex-direction: column; height: calc(100vh - 60px); position: sticky; top: 30px; }
+.side-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 40px; text-align: center; }
+.side-logo span { color: var(--primary); }
+.side-menu { display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+.menu-item { text-align: left; padding: 14px; border-radius: 15px; border: none; background: transparent; cursor: pointer; font-weight: 600; color: #64748b; }
+.menu-item.active { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2); }
+.btn-exit { background: #fee2e2; color: #b91c1c; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: auto; }
+
+.portal-content { flex-grow: 1; display: flex; flex-direction: column; gap: 25px; }
+.portal-header { padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
+.role-badge { background: #e0e7ff; color: var(--primary); padding: 6px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+
+/* TABLE */
+.journal-card { padding: 30px; overflow: hidden; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+.subject-selector { display: flex; gap: 8px; background: #f1f5f9; padding: 5px; border-radius: 12px; }
+.subject-selector button { border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #64748b; background: transparent; transition: 0.3s; }
+.subject-selector button.active { background: white; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+.table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #e2e8f0; background: white; }
+.journal-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+.journal-table th, .journal-table td { padding: 10px; border: 1px solid #f1f5f9; text-align: center; }
+.journal-table th { background: #f8fafc; color: #64748b; font-size: 0.75rem; font-weight: 800; }
+
+.sticky-col { position: sticky; left: 0; background: white !important; z-index: 5; min-width: 170px; text-align: left !important; border-right: 2px solid #e2e8f0 !important; }
+.student-name-cell { font-weight: 600; font-size: 0.85rem; }
+
+.grade-select { width: 34px; height: 34px; border: none; border-radius: 8px; font-weight: 800; text-align: center; appearance: none; cursor: pointer; }
+.grade-select.g-empty { border: 1px dashed #cbd5e1; }
+.grade-select.g-5, .grade-pill.g-5 { background: #dcfce7; color: #15803d; }
+.grade-select.g-4, .grade-pill.g-4 { background: #dbeafe; color: #1e40af; }
+.grade-select.g-3, .grade-pill.g-3 { background: #fef9c3; color: #a16207; }
+.grade-select.g-2, .grade-pill.g-2 { background: #fee2e2; color: #b91c1c; }
+.grade-select.g-nb, .grade-pill.g-nb { background: #fee2e2; color: #ef4444; font-size: 0.7rem; }
+
+.avg-cell { background: #f8fafc; color: var(--primary); font-weight: 800; border-left: 2px solid #e2e8f0 !important; }
+
+/* DASHBOARD */
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.stat-card { padding: 25px; display: flex; align-items: center; gap: 20px; }
+.s-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+.icon-blue { background: #dbeafe; color: #1e40af; }
+.icon-purple { background: #ede9fe; color: #6d28d9; }
+.border-blue { border-left: 5px solid #1e40af; }
+.border-purple { border-left: 5px solid #6d28d9; }
+
+@media (max-width: 768px) {
+  .app-sidebar { width: 75px; padding: 20px 10px; }
+  .hide-mobile { display: none; }
+  .side-logo { font-size: 1rem; margin-bottom: 20px; }
+  .app-portal { padding: 10px; }
+  .portal-container { gap: 10px; }
+}
+
+.fade-in { animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.chip-admin {
+  background: var(--primary) !important;
+  color: white !important;
+  border: none !important;
+}
+
+.hint-chips button {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.hint-chips button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.mini-avatar {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
