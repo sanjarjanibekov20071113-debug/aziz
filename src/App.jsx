@@ -16,17 +16,16 @@ const days = Array.from({ length: 15 }, (_, i) => i + 1);
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('wave_user_v12');
+    const saved = localStorage.getItem('wave_v17_fix');
     return saved ? JSON.parse(saved) : null;
   });
 
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('journal');
   const [selectedSubject, setSelectedSubject] = useState('Mathematics');
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const fetchGrades = async () => {
     setLoading(true);
@@ -39,10 +38,7 @@ function App() {
   };
 
   useEffect(() => { if (currentUser) fetchGrades(); }, [currentUser]);
-
-  useEffect(() => {
-    localStorage.setItem('wave_user_v12', currentUser ? JSON.stringify(currentUser) : '');
-  }, [currentUser]);
+  useEffect(() => { localStorage.setItem('wave_v17_fix', currentUser ? JSON.stringify(currentUser) : ''); }, [currentUser]);
 
   const handleGradeChange = async (studentId, day, value) => {
     if (currentUser.role !== 'System Administrator') return;
@@ -62,48 +58,39 @@ function App() {
         });
       }
       fetchGrades();
-    } catch (e) { alert("Ошибка сервера"); }
+    } catch (e) { console.error(e); }
   };
 
   const calculateAverage = (studentId) => {
-    const studentGrades = grades.filter(g => g.studentId === studentId && g.subject === selectedSubject && !isNaN(g.value));
-    if (studentGrades.length === 0) return "-";
-    const sum = studentGrades.reduce((acc, curr) => acc + Number(curr.value), 0);
-    return (sum / studentGrades.length).toFixed(1);
-  };
-
-  // Функция для быстрого входа
-  const quickLogin = (key) => {
-    setEmail(usersDb[key].email);
-    setPassword(usersDb[key].pass);
-    setCurrentUser(usersDb[key]);
+    const stGrades = grades.filter(g => g.studentId === studentId && g.subject === selectedSubject && !isNaN(g.value));
+    if (stGrades.length === 0) return "-";
+    const sum = stGrades.reduce((acc, curr) => acc + Number(curr.value), 0);
+    return (sum / stGrades.length).toFixed(1);
   };
 
   if (!currentUser) {
     return (
       <div className="login-screen">
-        <div className="auth-glass-card fade-in">
+        <div className="auth-card fade-in">
           <div className="auth-logo-box">W</div>
           <h1>WAVE<span>.IO</span></h1>
           <form className="auth-form" onSubmit={(e) => {
             e.preventDefault();
             const user = Object.values(usersDb).find(u => u.email === email && u.pass === password);
-            if (user) setCurrentUser(user); else setError("Неверные данные");
+            if (user) setCurrentUser(user);
           }}>
             <div className="input-field"><span>✉️</span><input type="email" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} required /></div>
             <div className="input-field"><span>🔒</span><input type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} required /></div>
-            {error && <p className="err-msg">{error}</p>}
             <button className="btn-primary">Войти</button>
           </form>
-          
           <div className="login-hints">
-            <p>Выберите аккаунт для входа:</p>
+            <p>Выбрать аккаунт:</p>
             <div className="hint-chips">
-              <button className="chip-admin" onClick={() => quickLogin('admin')}>Admin 😎</button>
-              <button onClick={() => quickLogin('student1')}>Аманкелди 🎓</button>
-              <button onClick={() => quickLogin('student2')}>Иван 🧑‍🎓</button>
-              <button onClick={() => quickLogin('student3')}>Дамир 👨‍🎓</button>
-              <button onClick={() => quickLogin('student4')}>Алина 👩‍🎓</button>
+              <button className="chip-admin" onClick={() => { setEmail('admin@gmail.com'); setPassword('admin123'); }}>Admin</button>
+              <button onClick={() => { setEmail('student@gmail.com'); setPassword('stud2026'); }}>Аманкелди</button>
+              <button onClick={() => { setEmail('ivan@gmail.com'); setPassword('ivan2026'); }}>Иван</button>
+              <button onClick={() => { setEmail('damir@gmail.com'); setPassword('damir2026'); }}>Дамир</button>
+              <button onClick={() => { setEmail('alina@gmail.com'); setPassword('alina2026'); }}>Алина</button>
             </div>
           </div>
         </div>
@@ -111,42 +98,27 @@ function App() {
     );
   }
 
-  const studentList = Object.values(usersDb).filter(u => u.role === 'Student');
-
   return (
     <div className="app-portal">
       <div className="portal-container">
-        <aside className="app-sidebar glass-effect">
+        <aside className="app-sidebar glass-panel">
           <div className="side-logo">WAVE<span>.IO</span></div>
           <nav className="side-menu">
-            <button className={`menu-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>📊 <span className="hide-mobile">Dashboard</span></button>
-            <button className={`menu-item ${activeTab === 'journal' ? 'active' : ''}`} onClick={() => setActiveTab('journal')}>📝 <span className="hide-mobile">Journal</span></button>
+            <button className={`menu-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>📊 <span className="hide-mobile">Главная</span></button>
+            <button className={`menu-item ${activeTab === 'journal' ? 'active' : ''}`} onClick={() => setActiveTab('journal')}>📝 <span className="hide-mobile">Журнал</span></button>
           </nav>
-          <button className="btn-exit" onClick={() => setCurrentUser(null)}>🚪 <span className="hide-mobile">Logout</span></button>
+          <button className="btn-exit" onClick={() => setCurrentUser(null)}>🚪 <span className="hide-mobile">Выход</span></button>
         </aside>
 
         <main className="portal-content">
-          <header className="portal-header glass-effect">
-            <div className="h-left">Привет, <b>{currentUser.name}</b> {loading && <span className="loader-text">...</span>}</div>
+          <header className="portal-header glass-panel">
+            <div className="h-left">Привет, <b>{currentUser.name}</b> {loading && <small className="loader">⏳</small>}</div>
             <div className="role-badge">{currentUser.role}</div>
           </header>
 
           <section className="dynamic-view fade-in">
-            {activeTab === 'dashboard' && (
-              <div className="dashboard-grid">
-                <div className="stat-card glass-effect border-blue">
-                   <div className="s-icon icon-blue">👤</div>
-                   <div><p>Пользователь</p><h3>{currentUser.name}</h3></div>
-                </div>
-                <div className="stat-card glass-effect border-purple">
-                   <div className="s-icon icon-purple">🌍</div>
-                   <div><p>Статус</p><h3>Online</h3></div>
-                </div>
-              </div>
-            )}
-
             {activeTab === 'journal' && (
-              <div className="journal-card glass-effect">
+              <div className="journal-card glass-panel">
                 <div className="card-header">
                   <h2>{selectedSubject}</h2>
                   <div className="subject-selector">
@@ -155,7 +127,6 @@ function App() {
                     ))}
                   </div>
                 </div>
-
                 <div className="table-wrapper">
                   <table className="journal-table">
                     <thead>
@@ -166,21 +137,15 @@ function App() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(currentUser.role === 'System Administrator' ? studentList : [currentUser]).map(st => (
+                      {(currentUser.role === 'System Administrator' ? Object.values(usersDb).filter(u => u.role === 'Student') : [currentUser]).map(st => (
                         <tr key={st.id}>
-                          <td className="sticky-col student-name-cell">
-                             <span className="mini-avatar">{st.avatar}</span> {st.name}
-                          </td>
+                          <td className="sticky-col student-name-cell"><span className="mini-avatar">{st.avatar}</span> {st.name}</td>
                           {days.map(d => {
                             const grade = grades.find(g => g.studentId === st.id && g.day === d && g.subject === selectedSubject);
                             return (
                               <td key={d} className="grade-cell">
                                 {currentUser.role === 'System Administrator' ? (
-                                  <select 
-                                    className={`grade-select g-${grade?.value === 'нб' ? 'nb' : grade?.value || 'empty'}`}
-                                    value={grade?.value || ""} 
-                                    onChange={(e) => handleGradeChange(st.id, d, e.target.value)}
-                                  >
+                                  <select className={`grade-select g-${grade?.value === 'нб' ? 'nb' : grade?.value || 'empty'}`} value={grade?.value || ""} onChange={(e) => handleGradeChange(st.id, d, e.target.value)}>
                                     <option value=""></option>
                                     <option value="5">5</option><option value="4">4</option>
                                     <option value="3">3</option><option value="2">2</option>
@@ -200,6 +165,7 @@ function App() {
                 </div>
               </div>
             )}
+            {activeTab === 'dashboard' && <div className="glass-panel" style={{padding: '30px', color: '#4c1d95'}}><h3>Dashboard</h3><p>Добро пожаловать в систему Wave.IO</p></div>}
           </section>
         </main>
       </div>
