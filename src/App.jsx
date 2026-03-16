@@ -104,10 +104,10 @@ function App() {
         <aside className="app-sidebar glass-panel">
           <div className="side-logo">WAVE<span>.IO</span></div>
           <nav className="side-menu">
-            <button className={`menu-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>📊 <span className="hide-mobile">Главная</span></button>
-            <button className={`menu-item ${activeTab === 'journal' ? 'active' : ''}`} onClick={() => setActiveTab('journal')}>📝 <span className="hide-mobile">Журнал</span></button>
+            <button className={`menu-item ${activeTab === 'dashboard' ? 'active' : ''}`} onClick={() => setActiveTab('dashboard')}>📊 <span className="hide-mobile">MAIN</span></button>
+            <button className={`menu-item ${activeTab === 'journal' ? 'active' : ''}`} onClick={() => setActiveTab('journal')}>📝 <span className="hide-mobile">GRADE BOOK</span></button>
           </nav>
-          <button className="btn-exit" onClick={() => setCurrentUser(null)}>🚪 <span className="hide-mobile">Выход</span></button>
+          <button className="btn-exit" onClick={() => setCurrentUser(null)}>🚪 <span className="hide-mobile">EXIT</span></button>
         </aside>
 
         <main className="portal-content">
