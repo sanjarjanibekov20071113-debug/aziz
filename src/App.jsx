@@ -8,7 +8,7 @@ const usersDb = {
   student1: { id: "303", email: 'student@gmail.com', pass: 'stud2026', name: 'Аманкелди Т.', role: 'Student', avatar: '🎓' },
   student2: { id: "404", email: 'ivan@gmail.com', pass: 'ivan2026', name: 'Иван Иванов', role: 'Student', avatar: '🧑‍🎓' },
   student3: { id: "705", email: 'damir1@gmail.com', pass: 'damir20261', name: ' дамир а.', role: 'Student', avatar: '👨‍🎓' },
-  student3: { id: "505", email: 'damir@gmail.com', pass: 'damir2026', name: 'aziz O.', role: 'Student', avatar: '👨‍🎓' },
+  student3: { id: "505", email: 'aziz@gmail.com', pass: 'damir2026', name: 'aziz O.', role: 'Student', avatar: '👨‍🎓' },
   student4: { id: "606", email: 'alina@gmail.com', pass: 'alina2026', name: 'Алина М.', role: 'Student', avatar: '👩‍🎓' }
 };
 
@@ -90,7 +90,7 @@ function App() {
               <button className="chip-admin" onClick={() => { setEmail('admin@gmail.com'); setPassword('admin123'); }}>Admin</button>
               <button onClick={() => { setEmail('student@gmail.com'); setPassword('stud2026'); }}>Аманкелди</button>
               <button onClick={() => { setEmail('ivan@gmail.com'); setPassword('ivan2026'); }}>Иван</button>
-              <button onClick={() => { setEmail('damir@gmail.com'); setPassword('damir2026'); }}>aziz O</button>
+              <button onClick={() => { setEmail('aziz@gmail.com'); setPassword('damir2026'); }}>aziz O</button>
               <button onClick={() => { setEmail('damir1@gmail.com'); setPassword('damir20261'); }}>дамир А</button>
               <button onClick={() => { setEmail('alina@gmail.com'); setPassword('alina2026'); }}>Алина</button>
             </div>
